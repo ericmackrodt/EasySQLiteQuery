@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySQLiteQuery", "EasySQLiteQuery\EasySQLiteQuery.csproj", "{41992B22-0EEB-4E1E-B92A-C89AE8993784}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasySQLiteQuery", "EasySQLiteQuery\EasySQLiteQuery.csproj", "{AE787C32-B949-46F2-814F-67BC69C812E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{41992B22-0EEB-4E1E-B92A-C89AE8993784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41992B22-0EEB-4E1E-B92A-C89AE8993784}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41992B22-0EEB-4E1E-B92A-C89AE8993784}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41992B22-0EEB-4E1E-B92A-C89AE8993784}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE787C32-B949-46F2-814F-67BC69C812E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE787C32-B949-46F2-814F-67BC69C812E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE787C32-B949-46F2-814F-67BC69C812E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE787C32-B949-46F2-814F-67BC69C812E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

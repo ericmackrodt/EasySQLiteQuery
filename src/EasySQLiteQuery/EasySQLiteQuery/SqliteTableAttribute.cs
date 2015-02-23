@@ -4,18 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SqliteTest
+namespace EasySQLiteQuery
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class SqliteViewAttribute : Attribute
+    public class SqliteTableAttribute : Attribute
     {
         public string Name { get; set; }
 
-        public SqliteViewAttribute()
-        {
-        }
+        public SqliteTableAttribute() { }
 
-        public SqliteViewAttribute(string name)
+        public SqliteTableAttribute(string name)
         {
             Name = name;
         }

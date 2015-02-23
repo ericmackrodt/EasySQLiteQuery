@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SqliteTest
+namespace EasySQLiteQuery
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class SqliteForeignKeyAttribute : Attribute

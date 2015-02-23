@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SqliteTest
+namespace EasySQLiteQuery
 {
     public class SqliteQuery : IDisposable
     {
@@ -61,10 +62,6 @@ namespace SqliteTest
             return name;
         }
 
-        //public IEnumerable<T> Select<T>(string whereStatement)
-        //{
-        //}
-
         public T Insert<T>(T obj)
         {
             var type = typeof(T);
@@ -88,13 +85,43 @@ namespace SqliteTest
             return obj;
         }
 
-        //public object Update<T>(T obj)
-        //{
-        //}
+        public void Update<T>(T obj)
+        {
+            var type = typeof(T);
+            var name = GetTableViewName(type);
 
-        //public object Drop<T>(T obj)
-        //{
-        //}
+            var fields = type.GetProperties()
+                .Where(o => !o.GetCustomAttributes(true).Any(x => x is SqlitePrimaryKeyAttribute && (x as SqlitePrimaryKeyAttribute).IsAutoIncrement));
+            var primaryKey = type.GetProperties()
+                .First(o => o.GetCustomAttributes(true).Any(x => x is SqlitePrimaryKeyAttribute && (x as SqlitePrimaryKeyAttribute).IsAutoIncrement));
+
+            var updateData = new List<string>();
+
+            foreach (var field in fields)
+            {
+                var f = string.Format("{0} = {1}", field.Name, ToTypedString(field.GetValue(obj)));
+                updateData.Add(f);
+            }
+
+            var query = string.Format("UPDATE TABLE {0} SET {1} WHERE {2} = {3}", name, string.Join(", ", updateData), primaryKey.Name, ToTypedString(primaryKey.GetValue(obj)));
+
+            var command = new SQLiteCommand(query, _connection);
+            var value = command.ExecuteNonQuery();
+        }
+
+        public void Drop<T>(T obj)
+        {
+            var type = typeof(T);
+            var name = GetTableViewName(type);
+
+            var primaryKey = type.GetProperties()
+                .First(o => o.GetCustomAttributes(true).Any(x => x is SqlitePrimaryKeyAttribute && (x as SqlitePrimaryKeyAttribute).IsAutoIncrement));
+
+            var query = string.Format("DELETE FROM {0} WHERE {1} = {2}", name, primaryKey.Name, ToTypedString(primaryKey.GetValue(obj)));
+
+            var command = new SQLiteCommand(query, _connection);
+            var value = command.ExecuteNonQuery();
+        }
 
         public void CreateTable<T>()
         {
@@ -173,7 +200,8 @@ namespace SqliteTest
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _connection.Close();
+            _connection.Dispose();
         }
     }
 }

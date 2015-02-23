@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SqliteTest
+namespace EasySQLiteQuery
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class SqlitePrimaryKeyAttribute : Attribute
