@@ -26,12 +26,21 @@ namespace EasySQLiteQuery
         public IEnumerable<T> Select<T>()
             where T : new()
         {
+            return Select<T>(null);
+        }
+
+        public IEnumerable<T> Select<T>(string whereStatement)
+            where T : new()
+        {
             var type = typeof(T);
             var name = GetTableViewName(type);
 
             var fields = type.GetProperties().Select(o => o.Name);
 
             var query = string.Format("SELECT {0} FROM {1}", string.Join(", ", fields), name);
+
+            if (!string.IsNullOrWhiteSpace(whereStatement))
+                query += string.Format(" WHERE {0}", whereStatement);
 
             var command = new SQLiteCommand(query, _connection);
             var reader = command.ExecuteReader();
@@ -162,7 +171,7 @@ namespace EasySQLiteQuery
             command.ExecuteNonQuery();
         }
 
-        public bool TableExists<T>()
+        public bool TableExists<T>() 
         {
             var type = typeof(T);
             var name = GetTableViewName(type);
@@ -176,7 +185,8 @@ namespace EasySQLiteQuery
         {
             if (field.PropertyType == typeof(int) ||
                 field.PropertyType == typeof(long) ||
-                field.PropertyType == typeof(DateTime))
+                field.PropertyType == typeof(DateTime) ||
+                field.PropertyType == typeof(bool))
                 return "integer";
 
             if (field.PropertyType == typeof(double) ||
@@ -188,6 +198,12 @@ namespace EasySQLiteQuery
 
         private object GetTypedValue(object value, Type type)
         {
+            if (value == null)
+                return null;
+
+            if (type == typeof(bool))
+                return Convert.ToBoolean((int)value);
+
             if (type == typeof(DateTime))
                 return ((long)value).ToDateTime();
 
@@ -199,6 +215,12 @@ namespace EasySQLiteQuery
 
         private string ToTypedString(object value)
         {
+            if (value == null)
+                return "NULL";
+
+            if (value is bool)
+                return Convert.ToInt32(value).ToString();
+
             if (value is string || value is Guid)
                 return string.Format("'{0}'", value);
 
