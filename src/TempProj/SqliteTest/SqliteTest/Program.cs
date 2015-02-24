@@ -14,6 +14,7 @@ namespace SqliteTest
             SQLiteConnection.CreateFile("Mydatabase.sqlite");
             using (var connection = new SQLiteConnection("Data Source=Mydatabase.sqlite;Version=3"))
             {
+                SQLiteCommand
                 connection.Open();
 
                 //var createRunTable = "CREATE TABLE  AutomatedTestsRun (AutomatedTestsRunID integer PRIMARY KEY AUTOINCREMENT, RunID text, RunStartTime integer, RunEndTime integer, Environment text)";

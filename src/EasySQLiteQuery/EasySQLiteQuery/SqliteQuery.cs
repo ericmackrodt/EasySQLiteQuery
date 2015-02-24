@@ -162,6 +162,16 @@ namespace EasySQLiteQuery
             command.ExecuteNonQuery();
         }
 
+        public bool TableExists<T>()
+        {
+            var type = typeof(T);
+            var name = GetTableViewName(type);
+
+            var query = string.Format("SELECT Exists(select name FROM sqlite_master WHERE type='table' and name = '{0}')", name);
+            var command = new SQLiteCommand(query, _connection);
+            return Convert.ToBoolean(command.ExecuteScalar());
+        }
+
         private string GetSQLiteType(PropertyInfo field)
         {
             if (field.PropertyType == typeof(int) ||
